@@ -30,11 +30,8 @@ class Player(pygame.sprite.Sprite):
         #Creates image of the player block.
         width = 40
         height = 60
-        self.image = pygame.image.load("memon yoda2.png").convert()
-        '''
-        self.image = pygame.Surface([width, height])
-        self.image.fill(red)
-        '''
+        self.image = pygame.image.load("memon yoda2.png").convert() # ellie's platform
+        
         #Reference to the image rect.
         self.rect = self.image.get_rect()
  
@@ -125,6 +122,9 @@ class Platform(pygame.sprite.Sprite):
     def __init__(self, width, height):
 
         pygame.sprite.Sprite.__init__(self)
+        # self.image = pygame.image.load("bg-image-url").convert()
+
+        
 
         rand = random.randint(0,3)
         if rand == 0:
@@ -136,9 +136,6 @@ class Platform(pygame.sprite.Sprite):
         elif rand == 3:
             self.image = pygame.image.load("nic cage.jpg").convert()
 
-        #self.image = pygame.Surface([width, height])
-        #self.image.fill(green)
- 
         self.rect = self.image.get_rect()
 
 class MovingPlatform(Platform):
