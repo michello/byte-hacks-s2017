@@ -361,7 +361,8 @@ def finalPopUp(stat):
         def analyze_line():
             global e
             string = e.get(1.0, 'end-1c')
-            if (string == "hello" '\n' "punk"):
+            code = "name = 'Ellie''\n'print('Hello, my name is' + name)"
+            if (string == code):
                 messagebox.showinfo("You did it!", 'OK')
                 stat = True
                 return(stat)
@@ -466,7 +467,7 @@ def main():
 
         if current_position < level.level_limit:
             done = finalPopUp(done)
-            
+
             # *** COULD DO MORE HERE: ENDING SCREEN / REPLAY OPTION ***
 
         #ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
