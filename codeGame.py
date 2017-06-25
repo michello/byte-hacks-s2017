@@ -41,11 +41,13 @@ def calc_grav(self):
         self.change_y = 0
         self.rect.y = screen_height - self.rect.height
 
-class Portal(pygame.sprite.Sprite):
+class Portal():
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("img/Portal.png")
-        self.rect = self.image.get_rect()
+        # pygame.sprite.Sprite.__init__(self)
+        self.position = (2000, 450)
+        self.surf = pygame.image.load("img/Portal.png")
+        self.rect = self.surf.get_rect(midbottom=self.position)
+
         self.rect.x = 2000
         self.rect.y = 450
 
@@ -244,8 +246,8 @@ class Level(object):
         self.player = player
         #self.monster_list = pygame.sprite.Group()
         self.portal = Portal()
-        self.portal.rect.x=2000
-        self.portal.rect.y=450
+        #self.portal.rect.x=2000
+        #self.portal.rect.y=450
 
         self.background = None
 
@@ -397,7 +399,7 @@ def main():
 
     #Creates the player
     player = Player()
-
+    Portal()
     active_sprite_list = pygame.sprite.Group()
 
     level = Level(player)
