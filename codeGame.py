@@ -20,13 +20,12 @@ screen_height = 700
 def generateFact():
     #pop up for killing/add this at the end:
     facts = ['You can save a value to a variable using an equal sign! \n For example, x = 10',
-                'Variable names are ',
                 'You can print words using the print function. \n For example, by typing: \n print("Hello world!");\n You are typing, "Hello world!"',
                 'A string is a collection of characters surrounded by quotes \n For example, "This is a string" is a string',
-                'You can save a string to a variable using the equal sign. \n For example, string_var = "A string"',
-                '']
+                'You can save a string to a variable using the equal sign. \n For example, string_var = "A string"']
     num = random.randrange(len(facts))
-    return(messagebox.showinfo(facts[num], 'OK'))
+    title = "Fun fact!"
+    messagebox.showinfo(title, facts[num])
 
 def calc_grav(self):
     #Calculate gravity.
@@ -39,105 +38,12 @@ def calc_grav(self):
     if self.rect.y >= screen_height - self.rect.height and self.change_y >= 0:
         self.change_y = 0
         self.rect.y = screen_height - self.rect.height
-'''
-def move(self):
-    if (self.rect.x > self.rect.x + 300):
-        self.rect.change_x = 100
-    self.rect.x += 100
 
-
-class Monster(pygame.sprite.Sprite): # not using
+class Portal(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load("img/Portal.png")
 
-        width = 30
-        height = 40
-
-        boundary_left = 0
-        boundary_right = 0
-
-
-        # self.image = pygame.image.load(monsterimageURLhere).convert_alpha()
-
-        self.image = pygame.Surface([width, height])
-        self.image.fill(red)
-
-        self.rect = self.image.get_rect()
-
-        #Speed vector of monster
-        self.change_x = 0
-        self.change_y = 0
-
-        #List of sprites we can bump against
-        self.level = None
-
-        #health
-        self.health = 2
-
-    def update(self):
-        #Gravity
-        calc_grav(self)
-
-        #Move left or right
-        self.rect.x += self.change_x
-
-        
-        #random monster movement
-        self.direction = random.choice(('left','right'))
-
-        if self.x_direction == 'left':
-            if self.rect.x > 1:
-                    self.rect.x -= 1
-            else:
-                    self.rect.x_direction = 'right'
-                    self.rect.x += 1
-        else:
-            if self.rect.x < px - 1:
-                    self.rect.x += 1
-            else:
-                    self.rect.x_direction = 'left'
-
-        #Check for collision
-        block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
-        for block in block_hit_list:
-        #If moving right, set our right side to the left side of the thing we hit
-            if self.change_x > 0:
-                self.rect.right = block.rect.left
-            elif self.change_x < 0:
-                #Otherwise if we are moving left, do the opposite.
-                self.rect.left = block.rect.right
-
-        #Move up/down
-        self.rect.y += self.change_y
-
-        #Check and see if we hit anything
-        block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
-        for block in block_hit_list:
-
-            #Reset position based on the top/bottom of the object.
-            if self.change_y > 0:
-                self.rect.bottom = block.rect.top
-            elif self.change_y < 0:
-                self.rect.top = block.rect.bottom
-
-            #Moves monster with the moving platform
-            if isinstance(block, MovingPlatform):
-                self.rect.x += block.change_x
-        
-
-        #Check and see if we hit the player
-        hit = pygame.sprite.collide_rect(self, self.player)
-        if hit:
-            #We did hit the player. REDUCE PLAYER HEALTH BY 1
-            self.player.health-=1
-
-
-    def lowerHealth(self):
-        self.health -= 1
-        if health == 0:
-            self.kill()
-            generateFact()
-'''
 class Player(pygame.sprite.Sprite):
 
     #Methods
@@ -262,7 +168,7 @@ class MovingPlatform(Platform):
 
         self.image = pygame.image.load("img/black.png").convert_alpha()
         self.rect = self.image.get_rect()
-        
+
     #Platform that moves side to side or up and down.
     change_x = 0
     change_y = 0
@@ -401,25 +307,7 @@ class Level(object):
         block2.player = self.player
         block2.level = self
         self.platform_list.add(block2)
-        '''
-        #Array with monsters' locations (x and y coordinates of monsters)
-        monsterList = [[200, 400],
-                 [450, 300],
-                 [750, 200],
-                 [1000, 100],
-                 [1825, 0],
-                 [2125, 0]]
 
-        #Goes through the array above and add monsters
-        for monst in monsterList:
-            block = Monster()
-            block.rect.x = monst[0]
-            block.rect.y = monst[1]
-            block.boundary_left = monst[0] - 200
-            block.boundary_right = monst[0] + 200
-            block.player = self.player
-            self.monster_list.add(block)
-'''
 
     #Update everything on this level
     def update(self):
@@ -444,17 +332,16 @@ class Level(object):
 
 def finalPopUp():
     global e
-    
+
     root = Tk()
 
     root.title('Name')
 
-    textBox=Text(root, height=3, width=50)
+    textBox=Text(root, height=25, width=50)
     textBox.pack()
     textBox.insert(INSERT, "Oh no, the door is locked!")
     textBox.insert(END, '\n')
-    textBox.insert(INSERT, "Unlock the door by introducing \
-    yourself with a \ngreeting and your name stored in a variable.")
+    textBox.insert(INSERT, "Unlock the door by introducing yourself with a \ngreeting and your name stored in a variable.")
     textBox.insert(END, '\n \n')
     e = Text(root, height=5, width=50)
     e.pack()
@@ -469,8 +356,8 @@ def finalPopUp():
             messagebox.showinfo("You did it!", 'OK')
         else:
             messagebox.showinfo("Please try again.", 'OK')
-        
-    
+
+
     b = Button(root,text='okay',command=analyze_line)
     b.pack(side='bottom')
 
