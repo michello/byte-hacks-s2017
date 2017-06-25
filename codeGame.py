@@ -3,6 +3,7 @@ import tkinter
 import pygame
 import random
 from tkinter import messagebox
+from tkinter import *
 
 #Colors
 #Pro-tip for nice colors: use www.color-hex.com
@@ -13,8 +14,8 @@ red = (246,84,106)
 blue = (176,224,230)
 
 #Screen dimensions
-screen_width = 1200
-screen_height = 900
+screen_width = 1000
+screen_height = 700
 
 def generateFact():
     #pop up for killing/add this at the end:
@@ -32,17 +33,18 @@ def calc_grav(self):
     if self.change_y == 0:
         self.change_y = 1
     else:
-        self.change_y += 0.35
+        self.change_y += 0.26
 
     #See if we are on the ground.
     if self.rect.y >= screen_height - self.rect.height and self.change_y >= 0:
         self.change_y = 0
         self.rect.y = screen_height - self.rect.height
-
+'''
 def move(self):
     if (self.rect.x > self.rect.x + 300):
-        self.rect.change_x = 1
-    self.rect.x += 1
+        self.rect.change_x = 100
+    self.rect.x += 100
+
 
 class Monster(pygame.sprite.Sprite): # not using
     def __init__(self):
@@ -79,7 +81,7 @@ class Monster(pygame.sprite.Sprite): # not using
         #Move left or right
         self.rect.x += self.change_x
 
-        '''
+        
         #random monster movement
         self.direction = random.choice(('left','right'))
 
@@ -121,7 +123,7 @@ class Monster(pygame.sprite.Sprite): # not using
             #Moves monster with the moving platform
             if isinstance(block, MovingPlatform):
                 self.rect.x += block.change_x
-        '''
+        
 
         #Check and see if we hit the player
         hit = pygame.sprite.collide_rect(self, self.player)
@@ -135,7 +137,7 @@ class Monster(pygame.sprite.Sprite): # not using
         if health == 0:
             self.kill()
             generateFact()
-
+'''
 class Player(pygame.sprite.Sprite):
 
     #Methods
@@ -214,7 +216,6 @@ class Player(pygame.sprite.Sprite):
                 MovingPlatform.status = True
 
 
-
     def jump(self):
         #Called when user presses up button.
 
@@ -246,15 +247,22 @@ class Platform(pygame.sprite.Sprite):
 
         pygame.sprite.Sprite.__init__(self)
 
-        '''
-        self.image = pygame.Surface([width, height])
-        self.image.fill(green)
-        '''
 
-        self.image = pygame.image.load("img/calico.png").convert_alpha()
+        #self.image = pygame.Surface([width, height])
+        #self.image.fill(green)
+
+
+        self.image = pygame.image.load("img/FloatingPlatform.png").convert_alpha()
         self.rect = self.image.get_rect()
 
 class MovingPlatform(Platform):
+    def __init__(self, width, height):
+
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = pygame.image.load("img/black.png").convert_alpha()
+        self.rect = self.image.get_rect()
+        
     #Platform that moves side to side or up and down.
     change_x = 0
     change_y = 0
@@ -325,7 +333,7 @@ class Level(object):
         #Constructor. Pass in a handle to player. Needed for when moving platforms collide with the player.
         self.platform_list = pygame.sprite.Group()
         self.player = player
-        self.monster_list = pygame.sprite.Group()
+        #self.monster_list = pygame.sprite.Group()
 
         self.background = None
 
@@ -334,14 +342,15 @@ class Level(object):
         self.level_limit = -1500
 
         #Array with width, height, x, and y of platform
-        level = [[random.randint(150,200), 75, 200, 550],
-                 #[random.randint(150,200), 75, 450, 425],
+        level = [[100, 100, 100, 500],
+                 [random.randint(150,200), 75, 750, 400],
                  #[random.randint(100,225), 75, 750, 350],
-                 [random.randint(100,200), 75, 1000, 400],
+                 [random.randint(100,200), 75, 1500, 350],
                  #[random.randint(100,225), 75, 1825, 200],
-                 [random.randint(100,225), 75, 2125, 100],
-                 [1200, 1, 0, 800],
-                 [1200, 1, 1200, 800]]
+                 [random.randint(100,225), 75, 2125, 250],
+                 #[1200, 1, 0, 700],
+                 #[1200, 1, 1200, 700
+                 ]
 
         #Goes through the array above and add platforms
         for platform in level:
@@ -357,7 +366,7 @@ class Level(object):
         block = MovingPlatform(70, 70)
         block.status = True
         block.rect.x = 300
-        block.rect.y = 750 #random.randint(150,280)
+        block.rect.y = 620 #random.randint(150,280)
         block.boundary_left = 100
         block.boundary_right = 500
         block.change_x = 3
@@ -370,9 +379,9 @@ class Level(object):
         block1 = MovingPlatform(70, 70)
         block.status = True
         block1.rect.x = 700
-        block1.rect.y = 750 #random.randint(150,280)
-        block1.boundary_left = 400
-        block1.boundary_right = random.randint(1550,1850)
+        block1.rect.y = 300 #random.randint(150,280)
+        block1.boundary_left = 700
+        block1.boundary_right = 1000
         block1.change_x =3
         block1.player = self.player
         block1.level = self
@@ -383,16 +392,16 @@ class Level(object):
 
         block2 = MovingPlatform(70, 70)
         block2.status = True
-        block2.rect.x = 1200
-        block2.rect.y = 750 #random.randint(150,280)
-        block2.boundary_left = 800
-        block2.boundary_right = 500
+        block2.rect.x = 2200
+        block2.rect.y = 200 #random.randint(150,280)
+        block2.boundary_left = 2100
+        block2.boundary_right = 2400
         #block2.change_y = -5
         block2.change_x = 3
         block2.player = self.player
         block2.level = self
         self.platform_list.add(block2)
-
+        '''
         #Array with monsters' locations (x and y coordinates of monsters)
         monsterList = [[200, 400],
                  [450, 300],
@@ -410,12 +419,12 @@ class Level(object):
             block.boundary_right = monst[0] + 200
             block.player = self.player
             self.monster_list.add(block)
-
+'''
 
     #Update everything on this level
     def update(self):
         self.platform_list.update()
-        self.monster_list.update()
+        #self.monster_list.update()
 
     def draw(self, screen, bg):
         #Draw the background
@@ -433,9 +442,41 @@ class Level(object):
         for platform in self.platform_list:
             platform.rect.x += shift_y
 
-def challengePopup(): # where the coding challenge is
-    # Open the door by introducing your name and age with variables!
-    return(True)
+def finalPopUp():
+    global e
+    
+    root = Tk()
+
+    root.title('Name')
+
+    textBox=Text(root, height=3, width=50)
+    textBox.pack()
+    textBox.insert(INSERT, "Oh no, the door is locked!")
+    textBox.insert(END, '\n')
+    textBox.insert(INSERT, "Unlock the door by introducing \
+    yourself with a \ngreeting and your name stored in a variable.")
+    textBox.insert(END, '\n \n')
+    e = Text(root, height=5, width=50)
+    e.pack()
+    e.focus_set()
+
+    stat = False
+
+    def analyze_line():
+        global e
+        string = e.get(1.0, 'end-1c')
+        if (string == "hello" '\n' "punk"):
+            messagebox.showinfo("You did it!", 'OK')
+        else:
+            messagebox.showinfo("Please try again.", 'OK')
+        
+    
+    b = Button(root,text='okay',command=analyze_line)
+    b.pack(side='bottom')
+
+
+    root.mainloop()
+
 
 
 def main():
@@ -447,7 +488,7 @@ def main():
     #music handling
     pygame.mixer.init() #initializes the mixer
     pygame.mixer.music.set_volume(.4) #sets the volume to a little lower than half
-    pygame.mixer.music.load('audio/endlvlsound.mp3') #loads the song
+    pygame.mixer.music.load('audio/BitQuest.mp3') #loads the song
     pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
     pygame.mixer.music.play(-1)
     #loops the song - set value to 0 if we want it to stop when the song ends
@@ -502,7 +543,7 @@ def main():
 
         level.platform_list.update()
 
-        level.monster_list.update()
+        #level.monster_list.update()
 
         #If the player gets near the right side, shift the world left (-x)
         if player.rect.right >= 500:
@@ -525,8 +566,7 @@ def main():
         #If the player gets to the end of the level, go to the next level
         current_position = player.rect.x + level.world_shift
         if current_position < level.level_limit:
-            done = challengePopup() # challenge popup
-
+            finalPopUp()
             # *** COULD DO MORE HERE: ENDING SCREEN / REPLAY OPTION ***
 
         #ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
@@ -542,8 +582,8 @@ def main():
         clock.tick(60)
 
         pygame.display.flip()
-
-    pygame.quit()
+    if done == True:
+        pygame.quit()
 
 if __name__ == "__main__":
     main()
