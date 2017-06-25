@@ -348,12 +348,14 @@ def finalPopUp(stat):
 
         root.title('Name')
 
-        textBox=Text(root, height=25, width=50)
+        textBox=Text(root, height=4, width=50)
         textBox.pack()
         textBox.insert(INSERT, "Oh no, the door is locked!")
         textBox.insert(END, '\n')
         textBox.insert(INSERT, "Unlock the door by introducing yourself with a \ngreeting and your name stored in a variable.")
         textBox.insert(END, '\n \n')
+        textBox.tag_add("start","1.0",END)
+        textBox.tag_config("start", background="#94B79B", foreground="#3D3D3D")
         e = Text(root, height=5, width=50)
         e.pack()
         e.focus_set()
@@ -361,14 +363,14 @@ def finalPopUp(stat):
         def analyze_line():
             global e
             string = e.get(1.0, 'end-1c')
-            code = "name = 'Ellie''\n'print('Hello, my name is' + name)"
+            code = "name = 'K8 Bit'\nprint('Hello, my name is' + name)"
             if (string == code):
-                messagebox.showinfo("You did it!", 'OK')
+                messagebox.showinfo("Congratulations!", 'You did it!!')
                 stat = True
                 return(stat)
                 #exit
             else:
-                messagebox.showinfo("Please try again.", 'OK')
+                messagebox.showinfo("Uh oh.", 'Please try again.')
                 stat = True
                 return(stat)
                 #exit
