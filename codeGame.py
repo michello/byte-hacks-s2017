@@ -17,6 +17,8 @@ blue = (176,224,230)
 screen_width = 1000
 screen_height = 700
 
+image1 = pygame.image.load("img/Portal.png")
+
 def generateFact():
     #pop up for killing/add this at the end:
     facts = ['You can save a value to a variable using an equal sign! \n For example, x = 10',
@@ -43,6 +45,9 @@ class Portal(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("img/Portal.png")
+        self.rect = self.image.get_rect()
+        self.rect.x = 2000
+        self.rect.y = 450
 
 class Player(pygame.sprite.Sprite):
 
@@ -153,10 +158,8 @@ class Platform(pygame.sprite.Sprite):
 
         pygame.sprite.Sprite.__init__(self)
 
-
         #self.image = pygame.Surface([width, height])
         #self.image.fill(green)
-
 
         self.image = pygame.image.load("img/FloatingPlatform.png").convert_alpha()
         self.rect = self.image.get_rect()
@@ -240,6 +243,9 @@ class Level(object):
         self.platform_list = pygame.sprite.Group()
         self.player = player
         #self.monster_list = pygame.sprite.Group()
+        self.portal = Portal()
+        self.portal.rect.x=2000
+        self.portal.rect.y=450
 
         self.background = None
 
@@ -329,6 +335,8 @@ class Level(object):
         #Go through all the sprite lists and shift
         for platform in self.platform_list:
             platform.rect.x += shift_y
+
+        self.portal.rect.x +=shift_y
 
 def finalPopUp():
     global e
@@ -452,6 +460,7 @@ def main():
 
         #If the player gets to the end of the level, go to the next level
         current_position = player.rect.x + level.world_shift
+
         if current_position < level.level_limit:
             finalPopUp()
             # *** COULD DO MORE HERE: ENDING SCREEN / REPLAY OPTION ***
@@ -460,7 +469,7 @@ def main():
 
         level.draw(screen, bg)
         active_sprite_list.draw(screen)
-
+        screen.blit(image1, [800, 450])
 
         #ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
 
