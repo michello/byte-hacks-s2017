@@ -11,6 +11,7 @@ fact she learns, K8 is one step closer to solving the coding
 challenge that awaits at the end of the level.
 
 For more info about the process, check the site out [here](http://www.codequests.tech/)
+or check out the devepost page [here](https://devpost.com/software/code-quest-eclb59)!
 
 ## dependencies & libraries
 * os
