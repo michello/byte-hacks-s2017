@@ -338,41 +338,42 @@ class Level(object):
 
         self.portal.rect.x +=shift_y
 
-def finalPopUp():
-    global e
-
-    root = Tk()
-
-    root.title('Name')
-
-    textBox=Text(root, height=25, width=50)
-    textBox.pack()
-    textBox.insert(INSERT, "Oh no, the door is locked!")
-    textBox.insert(END, '\n')
-    textBox.insert(INSERT, "Unlock the door by introducing yourself with a \ngreeting and your name stored in a variable.")
-    textBox.insert(END, '\n \n')
-    e = Text(root, height=5, width=50)
-    e.pack()
-    e.focus_set()
-
-    stat = False
-
-    def analyze_line():
+def finalPopUp(stat):
+    while (stat == False):
         global e
-        string = e.get(1.0, 'end-1c')
-        if (string == "hello" '\n' "punk"):
-            messagebox.showinfo("You did it!", 'OK')
-        else:
-            messagebox.showinfo("Please try again.", 'OK')
 
+        root = Tk()
 
-    b = Button(root,text='okay',command=analyze_line)
-    b.pack(side='bottom')
+        root.title('Name')
 
+        textBox=Text(root, height=25, width=50)
+        textBox.pack()
+        textBox.insert(INSERT, "Oh no, the door is locked!")
+        textBox.insert(END, '\n')
+        textBox.insert(INSERT, "Unlock the door by introducing yourself with a \ngreeting and your name stored in a variable.")
+        textBox.insert(END, '\n \n')
+        e = Text(root, height=5, width=50)
+        e.pack()
+        e.focus_set()
 
-    root.mainloop()
+        def analyze_line():
+            global e
+            string = e.get(1.0, 'end-1c')
+            if (string == "hello" '\n' "punk"):
+                messagebox.showinfo("You did it!", 'OK')
+                stat = True
+                return(stat)
+                #exit
+            else:
+                messagebox.showinfo("Please try again.", 'OK')
+                stat = True
+                return(stat)
+                #exit
 
+        b = Button(root,text='okay',command=analyze_line)
+        b.pack(side='bottom')
 
+        root.mainloop()
 
 def main():
     bg = pygame.image.load("img/Background.jpg")
@@ -462,7 +463,8 @@ def main():
         current_position = player.rect.x + level.world_shift
 
         if current_position < level.level_limit:
-            finalPopUp()
+            done = finalPopUp(done)
+            
             # *** COULD DO MORE HERE: ENDING SCREEN / REPLAY OPTION ***
 
         #ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
